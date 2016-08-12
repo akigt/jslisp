@@ -98,14 +98,13 @@ console.log(compile(melody_mus));
 
 
 /// change pitch to midi number (ex c4 -> 60)
-var convertPitch = (note) => {
+var convertPitch = (pitch) => {
     var midiNum = 12;
-    var intervals = {'C':0, 'D':2, 'E':4, 'F':5, 'G':7, 'A':9,'B':10}
-    var pitch = note.pitch;
+    var intervals = {'C':0, 'D':2, 'E':4, 'F':5, 'G':7, 'A':9,'B':11}
     midiNum += intervals[pitch[0].toUpperCase()];
     midiNum += parseInt(pitch[1]) * 12; 
 
     return midiNum
 }
 
-console.log(convertPitch({ tag: 'note', pitch: 'c4', dur: 250 } ));
+console.log(convertPitch('c4'));
