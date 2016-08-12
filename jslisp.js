@@ -64,7 +64,13 @@ var compile = function (musexpr) {
              var rightTotal = total;
              total = Math.max(leftTotal,rightTotal);
         }
-        else if (expr.tag === 'note' || expr.tag === 'rest') {
+        else if (expr.tag === 'note') {
+            expr.start = total; /// exprのノートobjにstart時間を追加してからnoteにプッシュ
+            expr.pitch = convertPitch(expr.pitch);
+            notes.push(expr);
+            total += expr.dur;
+        }
+        else if (expr.tag === 'rest'){
             expr.start = total; /// exprのノートobjにstart時間を追加してからnoteにプッシュ
             notes.push(expr);
             total += expr.dur;
