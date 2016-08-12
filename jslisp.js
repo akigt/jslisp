@@ -13,35 +13,30 @@ var endTime = function (time, expr) {
     return totalTime(expr) + time;
 };
 
-
-
-
-
-
 // maybe some helper functions
 
-var compile = function (musexpr) {
-    // your code here
-    var total = 0;
-    var note = [];
+// var compile = function (musexpr) {
+//     // your code here
+//     var total = 0;
+//     var note = [];
     
-    // 深さ優先探索をする
-    var traverse = function (expr) {
-        if (expr.tag === 'note') {
-            expr.start = total; /// exprのノートobjにstart時間を追加してからnoteにプッシュ
-            note.push(expr);
-            total += expr.dur;
-        }
-        else {
-            traverse(expr.left);
-            traverse(expr.right);
-        }
+//     // 深さ優先探索をする
+//     var traverse = function (expr) {
+//         if (expr.tag === 'note') {
+//             expr.start = total; /// exprのノートobjにstart時間を追加してからnoteにプッシュ
+//             note.push(expr);
+//             total += expr.dur;
+//         }
+//         else {
+//             traverse(expr.left);
+//             traverse(expr.right);
+//         }
             
-    };
+//     };
     
-    traverse(musexpr);
-    return note;
-};
+//     traverse(musexpr);
+//     return note;
+// };
 
 
 
@@ -84,3 +79,18 @@ var compile = function (musexpr) {
     traverse(musexpr);
     return note;
 };
+
+
+var melody_mus = 
+    { tag: 'seq',
+      left: 
+       { tag: 'seq',
+         left: { tag: 'note', pitch: 'a4', dur: 250 },
+         right: { tag: 'note', pitch: 'b4', dur: 250 } },
+      right:
+       { tag: 'seq',
+         left: { tag: 'note', pitch: 'c4', dur: 500 },
+         right: { tag: 'note', pitch: 'd4', dur: 500 } } };
+
+console.log(melody_mus);
+console.log(compile(melody_mus));
