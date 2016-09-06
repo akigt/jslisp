@@ -80,6 +80,7 @@ var compile = function (musexpr) {
             for (var i = 0; i < expr.count; i++){
                 traverse(expr.section)
             }
+            console.log(total);
         }
         else if (expr.tag === 'note') {
             // expr.start = total; /// exprのノートobjにstart時間を追加してからnoteにプッシュ
@@ -129,7 +130,23 @@ var melody_mus =
         {
             tag: 'seq',
             left: { tag: 'note', pitch: 'c4', dur: 500 },
+            right: { tag: 'repeat',
+  section:  {
+        tag: 'seq',
+        left:
+        {
+            tag: 'seq',
+            left: { tag: 'rest', dur: 250 },
+            right: { tag: 'note', pitch: 'b4', dur: 250 }
+        },
+        right:
+        {
+            tag: 'seq',
+            left: { tag: 'note', pitch: 'c4', dur: 500 },
             right: { tag: 'note', pitch: 'd4', dur: 500 }
+        }
+    },
+  count: 3 }
         }
     };
 
@@ -153,18 +170,24 @@ var melody2 = { tag: 'repeat',
 
 console.log(melody_mus);
 // console.log(compile(melody_mus));
-console.log(compile(melody2));
+console.log(compile(melody_mus));
 
+var melody_music =
+    { tag: 'seq',
+      left:
+       { tag: 'seq',
+         left: { tag: 'note', pitch: 'a4', dur: 250 },
+         right: { tag: 'note', pitch: 'b4', dur: 250 } },
+      right:
+       { tag: 'seq',
+         left: {
+           tag: 'seq',
+           left: { tag: 'note', pitch: 'c4', dur: 500 },
+           right: { tag: 'rest', dur: 250 } },
+         right: { tag: 'repeat',
+           section : { tag: 'note', pitch: 'd4', dur: 500 },
+           count: 3 } } };
 
+// console.log(melody_music);
+console.log(compile(melody_music));
 
-// /// change pitch to midi number (ex c4 -> 60)
-// var convertPitch = (pitch) => {
-//     var midiNum = 12;
-//     var intervals = { 'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11 }
-//     midiNum += intervals[pitch[0].toUpperCase()];
-//     midiNum += parseInt(pitch[1]) * 12;
-
-//     return midiNum
-// }
-
-// console.log(convertPitch('c4'));
