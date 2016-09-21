@@ -1,7 +1,8 @@
 var prg = ['begin',
     ['define', 'x', 5],
     ['set!', 'x', ['+', 'x', 1]],
-    ['<', 2, 100]];
+    ['<', 2, 100],
+    ['cons', ['quote', [1, 2]], ['quote', [3, 4]]]];
 
 var env = { a: 1, b: 7 };
 
@@ -33,6 +34,13 @@ var evalScheem = function (expr, env) {
         case 'quote':
             return expr[1];
 
+        case 'cons':
+            return [evalScheem(expr[1], env)].concat(evalScheem(expr[2], env));
+        case 'car':
+            return evalScheem(expr[1], env).shift(0);
+        case 'cdr':
+            return evalScheem(expr[1], env).slice(1);
+
 
         case '+':
             return evalScheem(expr[1], env) +
@@ -56,6 +64,19 @@ var evalScheem = function (expr, env) {
                     evalScheem(expr[2], env));
             if (eq) return '#t';
             return '#f';
+
+        case '=':
+            var eq =
+                (evalScheem(expr[1], env) ===
+                    evalScheem(expr[2], env));
+            if (eq) return '#t';
+            return '#f';
+            
+        case 'if':
+            if (evalScheem(expr[1], env) === '#t')
+                return evalScheem(expr[2], env);
+            else
+                return evalScheem(expr[3], env);
     }
 };
 

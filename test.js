@@ -10,4 +10,8 @@ console.log(data);
 var parse = PEG.generate(data).parse;
 // Do a test
 assert.deepEqual( parse("(a b c)"), ["a", "b", "c"] );
-console.log(parse("(a b c)"));
+// console.log(parse("(a b c)"));
+
+
+
+
